@@ -3,17 +3,18 @@ package racingcar;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Application {
   public static void main(String[] args) {
     List<String> carList = getName();
     int numberOfTries = getTries();
     Map<String, Integer> scores = initializeCarScores(carList);
+
+    System.out.println("실행 결과");
     Map<String, Integer> result = getScore(numberOfTries, scores);
+    System.out.println();
+    printWinner(scores);
   }
 
   public static List<String> getName() {
@@ -42,6 +43,8 @@ public class Application {
   public static Map<String, Integer> getScore(int numberOfTries, Map<String, Integer> scores) {
     for (int i = 0; i < numberOfTries; i++) {
       tryOneTime(scores);
+      printResult(scores);
+      System.out.println();
     }
     return scores;
   }
@@ -61,5 +64,30 @@ public class Application {
       eachScore += 1;
     }
     return eachScore;
+  }
+
+  public static void printResult(Map<String, Integer> scores) {
+    for (String eachCar : scores.keySet()) {
+      int eachScore = scores.get(eachCar);
+      System.out.println(eachCar + " : " + "-".repeat(eachScore));
+    }
+  }
+
+  public static void printWinner(Map<String, Integer> scores) {
+    int maxScore = Collections.max(scores.values());
+    List<String> winners = new ArrayList<>();
+
+    for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+      addIfMaxScore(entry, maxScore, winners);
+    }
+
+    System.out.println("최종 우승자 : " + String.join(", ", winners));
+  }
+
+  public static void addIfMaxScore(
+      Map.Entry<String, Integer> entry, int maxScore, List<String> winners) {
+    if (entry.getValue() == maxScore) {
+      winners.add(entry.getKey());
+    }
   }
 }
