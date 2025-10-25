@@ -9,7 +9,10 @@ import java.util.Map;
 public class GameController {
   public static void run() {
     List<String> carList = InputHandler.getName();
+    Validator.validateName(carList);
+
     int numberOfTries = InputHandler.getTries();
+    Validator.validateInt(numberOfTries);
 
     Map<String, Integer> scores = GameService.initializeCarScores(carList);
 
