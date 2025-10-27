@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomNumberInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class ApplicationTest extends NsTest {
 
@@ -53,6 +52,42 @@ class ApplicationTest extends NsTest {
     assertSimpleTest(
         () ->
             assertThatThrownBy(() -> runException("pobi,javaji", "1"))
+                .isInstanceOf(IllegalArgumentException.class));
+  }
+
+  @Test
+  @DisplayName("공백을 입력 시 예외가 발생한다.")
+  void throwsExceptionWhenInputIsBlank() {
+    assertSimpleTest(
+        () ->
+            assertThatThrownBy(() -> runException(" "))
+                .isInstanceOf(IllegalArgumentException.class));
+  }
+
+  @Test
+  @DisplayName("한 명만 입력 시 예외가 발생한다.")
+  void throwsExceptionWhenOnlyOneNameEntered() {
+    assertSimpleTest(
+        () ->
+            assertThatThrownBy(() -> runException("pobi"))
+                .isInstanceOf(IllegalArgumentException.class));
+  }
+
+  @Test
+  @DisplayName("0을 입력 시 예외가 발생한다.")
+  void throwsExceptionWhenNumberIsZero() {
+    assertSimpleTest(
+        () ->
+            assertThatThrownBy(() -> runException("pobi,javaji", "0"))
+                .isInstanceOf(IllegalArgumentException.class));
+  }
+
+  @Test
+  @DisplayName("음수를 입력 시 예외가 발생한다.")
+  void throwsExceptionWhenNumberUnderZero() {
+    assertSimpleTest(
+        () ->
+            assertThatThrownBy(() -> runException("pobi,javaji", "-3"))
                 .isInstanceOf(IllegalArgumentException.class));
   }
 
