@@ -3,17 +3,17 @@ package racingcar;
 import java.util.List;
 
 public class Validator {
-  public static void validateName(List<String> carList) {
-    if (carList.isEmpty()) {
+  public static void validateName(List<String> carNameList) {
+    if (carNameList.isEmpty()) {
       throw new IllegalArgumentException("자동차 이름을 입력하세요.");
     }
 
-    for (String name : carList) {
+    for (String name : carNameList) {
       if (name.length() > 5) {
         throw new IllegalArgumentException("자동차 이름은 5자 이하로 입력하세요.");
       }
     }
-    if (carList.size() == 1) {
+    if (carNameList.size() == 1) {
       throw new IllegalArgumentException("두개 이상의 이름을 입력하세요.");
     }
   }

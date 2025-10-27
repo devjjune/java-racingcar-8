@@ -5,7 +5,7 @@ import camp.nextstep.edu.missionutils.Randoms;
 import java.util.*;
 
 public class GameService {
-  public static Map<String, Integer> initializeCarScores(List<String> carList) {
+  public static Map<String, Integer> initializeCarPositions(List<String> carList) {
     Map<String, Integer> scores = new HashMap<>();
     for (int i = 0; i < carList.size(); i++) {
       scores.put(carList.get(i), 0);
@@ -13,40 +13,40 @@ public class GameService {
     return scores;
   }
 
-  public static Map<String, Integer> getScore(int numberOfTries, Map<String, Integer> scores) {
+  public static Map<String, Integer> playRounds(int numberOfTries, Map<String, Integer> carPositions) {
     for (int i = 0; i < numberOfTries; i++) {
-      tryOneTime(scores);
-      OutputView.printResult(scores);
+      playOneTime(carPositions);
+      OutputView.printResult(carPositions);
     }
-    return scores;
+    return carPositions;
   }
 
-  public static Map<String, Integer> tryOneTime(Map<String, Integer> scores) {
-    for (String eachCar : scores.keySet()) {
-      int eachScore = scores.get(eachCar);
-      eachScore = plusRandomNumber(eachScore);
-      scores.put(eachCar, eachScore);
+  public static Map<String, Integer> playOneTime(Map<String, Integer> carPositions) {
+    for (String eachCar : carPositions.keySet()) {
+      int eachPosition = carPositions.get(eachCar);
+      eachPosition = attemptMove(eachPosition);
+      carPositions.put(eachCar, eachPosition);
     }
-    return scores;
+    return carPositions;
   }
 
-  public static int plusRandomNumber(int eachScore) {
+  public static int attemptMove(int eachPosition) {
     int randomNumber = Randoms.pickNumberInRange(0, 9);
     if (randomNumber >= 4) {
-      eachScore += 1;
+      eachPosition += 1;
     }
-    return eachScore;
+    return eachPosition;
   }
 
-  public static void getWinner(Map<String, Integer> scores) {
-    int maxScore = Collections.max(scores.values());
-    List<String> winners = new ArrayList<>();
+  public static void calculateWinner(Map<String, Integer> carPositions) {
+    int maxScore = Collections.max(carPositions.values());
+    List<String> winnersName = new ArrayList<>();
 
-    for (Map.Entry<String, Integer> entry : scores.entrySet()) {
-      GameService.addIfMaxScore(entry, maxScore, winners);
+    for (Map.Entry<String, Integer> entry : carPositions.entrySet()) {
+      GameService.addIfMaxScore(entry, maxScore, winnersName);
     }
 
-    OutputView.printWinner(winners);
+    OutputView.printWinner(winnersName);
   }
 
   public static void addIfMaxScore(

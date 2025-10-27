@@ -8,7 +8,7 @@ import java.util.List;
 public class InputHandler {
   private InputHandler() {}
 
-  public static List<String> getName() {
+  public static List<String> readNames() {
     System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
     String inputName = Console.readLine();
     String[] carArray = inputName.split(",");
@@ -16,7 +16,7 @@ public class InputHandler {
     return new ArrayList<>(List.of(carArray));
   }
 
-  public static int getTries() {
+  public static int readTries() {
     System.out.println("시도할 횟수는 몇 회인가요?");
     String inputTries = Console.readLine();
 

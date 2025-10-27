@@ -8,16 +8,16 @@ import java.util.Map;
 
 public class GameController {
   public static void run() {
-    List<String> carList = InputHandler.getName();
-    Validator.validateName(carList);
+    List<String> carNameList = InputHandler.readNames();
+    Validator.validateName(carNameList);
 
-    int numberOfTries = InputHandler.getTries();
+    int numberOfTries = InputHandler.readTries();
     Validator.validateInt(numberOfTries);
 
-    Map<String, Integer> scores = GameService.initializeCarScores(carList);
+    Map<String, Integer> carPositions = GameService.initializeCarPositions(carNameList);
 
-    OutputView.message();
-    Map<String, Integer> result = GameService.getScore(numberOfTries, scores);
-    GameService.getWinner(scores);
+    OutputView.printStartMessage();
+    Map<String, Integer> result = GameService.playRounds(numberOfTries, carPositions);
+    GameService.calculateWinner(carPositions);
   }
 }
